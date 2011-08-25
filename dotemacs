@@ -1,0 +1,201 @@
+;; emacs, this is -*- emacs-lisp -*-
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(Info-additional-directory-list (quote ("/usr/share/info")))
+ '(blink-cursor-mode t)
+ '(case-fold-search t)
+ '(column-number-mode t)
+ '(current-language-environment "ASCII")
+ '(display-time-mode t)
+ '(global-font-lock-mode t nil (font-lock))
+ '(mouse-avoidance-animation-delay 10.0)
+ '(mouse-avoidance-mode (quote animate) nil (avoid))
+ '(ns-command-modifier (quote meta))
+ '(safe-local-variable-values (quote ((whitespace-check-buffer-ateol))))
+ '(show-paren-mode t nil (paren)))
+
+(defun home-directory ()
+  (getenv "HOME"))
+
+(defun add-load-path (path)
+  (setq load-path (cons (format "%s/%s" (home-directory) path) load-path))
+)
+
+(defun machine-add-load-path (path)
+  (setq load-path (cons (format "%s/emacs/machines/%s/%s" (home-directory) (system-name) path) load-path))
+)
+
+(add-load-path "emacs/common")
+
+(fset 'my-list-buffers
+   "\C-x1\C-x3\C-[xlist-buffers\C-m\C-xo")
+
+(defun pyflakes-thisfile ()
+  (interactive)
+  (compile (format "pyflakes %s" (buffer-file-name))))
+
+;; Make M-q-like functionality for lines with a common prefix (i.e.,
+;; to fix reply text in emails).
+(defun my-wrap ()
+  (interactive)
+  (shell-command-on-region (mark) (point)
+     "~/bin/wrap.py" nil t)
+)
+
+(defun fullscreen (&optional f)
+  (interactive)
+  (set-frame-parameter f 'fullscreen
+                       (if (frame-parameter f 'fullscreen) nil 'fullboth)))
+
+(defun global-settings ()
+  "Configure global editor settings."
+  (interactive)
+  (progn
+    (put 'downcase-region 'disabled nil)
+
+    (setq-default c-basic-offset 4)
+    (display-time)
+    (keyboard-translate ?\C-h ?\C-?)
+
+    (setq inhibit-startup-message t)
+    (setq-default cursor-color "LightBlue")
+    (setq-default kill-whole-line t)
+    (setq-default indent-tabs-mode nil)
+    (setq mouse-yank-at-point t)
+    ;; Enable region narrowing.
+    (put 'narrow-to-region 'disabled nil)
+    (setq-default show-trailing-whitespace t)
+    )
+
+  (require 'org-install)
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+  (define-key global-map "\C-cl" 'org-store-link)
+  (define-key global-map "\C-ca" 'org-agenda)
+  (setq org-log-done t)
+  (setq org-hide-leading-stars t)
+)
+
+(defun load-required-sources ()
+  "Load required elisp library source files."
+  (interactive)
+  (progn
+    (load-library "rst")
+    (load-library "ebby")
+
+    (require 'desktop)
+    (require 'parenthesis)
+    (require 'redo)
+
+    (add-load-path "emacs/haskell-mode-2.4")
+
+    (load-haskell-mode)
+    )
+)
+
+(defun load-haskell-mode ()
+  ;; Stolen from the debian package.
+  (setq auto-mode-alist
+      (append auto-mode-alist
+              '(("\\.[hg]s$"  . haskell-mode)
+                ("\\.hi$"     . haskell-mode)
+                ("\\.l[hg]s$" . literate-haskell-mode))))
+
+  (setq interpreter-mode-alist
+        (append interpreter-mode-alist
+                '(("^#!.*runhugs" . haskell-mode))))
+
+  (autoload 'markdown-mode "markdown-mode.el"
+    "Major mode for editing Markdown files" t)
+  (setq auto-mode-alist
+        (cons '("\\.md" . markdown-mode) auto-mode-alist))
+
+  (autoload 'haskell-mode "haskell-mode"
+    "Major mode for editing Haskell scripts." t)
+  (autoload 'literate-haskell-mode "haskell-mode"
+    "Major mode for editing literate Haskell scripts." t)
+  (autoload 'turn-on-haskell-ghci "haskell-ghci"
+    "Turn on interaction with a GHC interpreter." t)
+
+  (add-hook 'haskell-mode-hook 'turn-on-font-lock)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
+  (if (not (string-match "Lucid\\|XEmacs" emacs-version))
+      (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode))
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+  ;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+  ;(add-hook 'haskell-mode-hook 'turn-on-haskell-hugs)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)
+)
+
+(defun setup-modes ()
+  "Start and/or configure editor modes."
+  (interactive)
+  (progn
+    ;; Desktop mode.
+    (setq desktop-save-mode t)
+
+    ;; Other modes.
+    (menu-bar-mode nil)
+    (blink-cursor-mode nil)
+    (line-number-mode 1)
+    (column-number-mode 1)
+    (transient-mark-mode 1)
+    (mouse-avoidance-mode)
+    (ido-mode)
+
+    (if window-system
+        (progn
+          (tool-bar-mode nil)
+          (scroll-bar-mode nil)
+          (load-library "theme")
+          )
+      )
+    )
+)
+
+(defun set-keybindings ()
+  "Set keybindings."
+  (interactive)
+  (progn
+    (global-set-key "\C-cl" 'goto-line)
+    (global-set-key "\M-g" 'goto-line)
+
+    (global-set-key [(control x)(control r)] 'redo)
+    (global-set-key "\C-x\C-b" 'my-list-buffers)
+
+    (global-set-key [f11] 'fullscreen)
+    (add-hook 'after-make-frame-functions 'fullscreen)
+    )
+)
+
+(defun load-machine-custom-elisp ()
+  "Use hostname to load machine-specific elisp."
+  (interactive)
+  ; Add a machine-specific directory to the emacs load path.
+  (add-load-path (format "emacs/machines/%s" (system-name)))
+  ; Load the machine-specific elisp file.
+  (load-file (format "%s/emacs/machines/%s.el" (home-directory) (system-name)))
+)
+
+;; Main
+(defun configure-emacs ()
+  (interactive)
+  (progn
+    (global-settings)
+    (load-required-sources)
+    (setup-modes)
+    (set-keybindings)
+    (load-machine-custom-elisp)
+    )
+)
+
+(configure-emacs)
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
