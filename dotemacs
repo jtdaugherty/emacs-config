@@ -53,8 +53,7 @@
 
 (defun fullscreen (&optional f)
   (interactive)
-  (set-frame-parameter f 'fullscreen
-                       (if (frame-parameter f 'fullscreen) nil 'fullboth)))
+  (ns-toggle-fullscreen))
 
 (defun global-settings ()
   "Configure global editor settings."
@@ -171,8 +170,7 @@
     (global-set-key [(control x)(control r)] 'redo)
     (global-set-key "\C-x\C-b" 'my-list-buffers)
 
-    (global-set-key [f11] 'fullscreen)
-    (add-hook 'after-make-frame-functions 'fullscreen)
+    (global-set-key [M-return] 'ns-toggle-fullscreen)
     )
 )
 
