@@ -21,7 +21,7 @@
 (setq whitespace-style '(lines))
 (setq whitespace-line-column 78)
 (global-whitespace-mode 1)
-(setq whitespace-style (quote (lines-tail indentation trailing)))
+;; (setq whitespace-style (quote (lines-tail indentation trailing)))
 
 (defun home-directory ()
   (getenv "HOME"))
