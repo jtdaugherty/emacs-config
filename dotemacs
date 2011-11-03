@@ -75,9 +75,12 @@
     (setq-default show-trailing-whitespace t)
     )
 
+  (when (require 'browse-kill-ring nil 'noerror)
+    (browse-kill-ring-default-keybindings))
+
   (require 'org-install)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-  (define-key global-map "\C-cl" 'org-store-link)
+  (define-key global-map "\C-c|" 'align-regexp)
   (define-key global-map "\C-ca" 'org-agenda)
   (setq org-log-done t)
   (setq org-hide-leading-stars t)
@@ -165,7 +168,6 @@
   (interactive)
   (progn
     (global-set-key "\C-cl" 'goto-line)
-    (global-set-key "\M-g" 'goto-line)
 
     (global-set-key [(control x)(control r)] 'redo)
     (global-set-key "\C-x\C-b" 'my-list-buffers)
