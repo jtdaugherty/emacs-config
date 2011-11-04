@@ -58,7 +58,7 @@ the local mount point path."
   )
 
 (defun remote-path-from-local-path (local-path)
-  "Gien a local path within a mounted SSHFS filesystem, return
+  "Given a local path within a mounted SSHFS filesystem, return
 the full remote path corresponding to the local path."
   (interactive)
   (concat
