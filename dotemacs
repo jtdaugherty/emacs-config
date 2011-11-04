@@ -21,6 +21,7 @@
 (setq whitespace-style '(lines))
 (setq whitespace-line-column 78)
 (global-whitespace-mode 1)
+
 ;; (setq whitespace-style (quote (lines-tail indentation trailing)))
 
 (defun home-directory ()
@@ -38,10 +39,6 @@
 
 (fset 'my-list-buffers
    "\C-x1\C-x3\C-[xlist-buffers\C-m\C-xo")
-
-(defun pyflakes-thisfile ()
-  (interactive)
-  (compile (format "pyflakes %s" (buffer-file-name))))
 
 ;; Make M-q-like functionality for lines with a common prefix (i.e.,
 ;; to fix reply text in emails).
