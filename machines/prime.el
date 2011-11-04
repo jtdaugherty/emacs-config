@@ -6,7 +6,8 @@
 (set-default-font "Lucida Console:size=16")
 (tool-bar-mode)
 (menu-bar-mode)
-(my-color-theme-light)
+;; (my-color-theme-light)
+(my-color-theme-dark)
 
 ;;(add-load-path "emacs_work")
 ;;(load-library "dotemacs")
