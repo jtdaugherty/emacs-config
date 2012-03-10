@@ -18,9 +18,9 @@
  '(safe-local-variable-values (quote ((whitespace-check-buffer-ateol))))
  '(show-paren-mode t nil (paren)))
 
-(setq whitespace-style '(lines))
-(setq whitespace-line-column 78)
-(global-whitespace-mode 1)
+;; (setq whitespace-style '(lines-tail))
+;; (setq whitespace-line-column 78)
+;; (global-whitespace-mode 0)
 
 ;; (setq whitespace-style (quote (lines-tail indentation trailing)))
 
@@ -75,7 +75,7 @@
   (when (require 'browse-kill-ring nil 'noerror)
     (browse-kill-ring-default-keybindings))
 
-  (require 'org-install)
+;;  (require 'org-install)
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
   (define-key global-map "\C-c|" 'align-regexp)
   (define-key global-map "\C-ca" 'org-agenda)
@@ -155,9 +155,10 @@
         (progn
           (tool-bar-mode nil)
           (scroll-bar-mode nil)
-          (load-library "theme")
           )
       )
+
+    (load-library "theme")
     )
 )
 

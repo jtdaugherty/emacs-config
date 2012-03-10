@@ -2,10 +2,15 @@
 (setenv "PATH" (concat "/Users/cygnus/.bin:/Users/cygnus/.cabal/bin:/opt/local/bin:"
                        (getenv "PATH")))
 
-;;(set-default-font "Menlo:size=14")
-(set-default-font "Lucida Console:size=16")
-(tool-bar-mode)
-(menu-bar-mode)
+(set-default-font "Menlo:size=15")
+;; (set-default-font "Lucida Console:size=16")
+
+(if window-system
+    (progn
+      (tool-bar-mode nil)
+      (menu-bar-mode nil)
+      )
+)
 ;; (my-color-theme-light)
 (my-color-theme-dark)
 
