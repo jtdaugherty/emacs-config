@@ -38,7 +38,7 @@
 (add-load-path "emacs/common")
 
 (fset 'my-list-buffers
-   [?\C-x ?1 ?\C-x ?3 ?\C-x ?o ?\M-x ?b ?u ?f ?f ?e ?r ?- ?m ?e ?n ?u return])
+   "\C-x1\C-x3\C-xo\C-[xbuffer-menu\C-m")
 
 ;; Make M-q-like functionality for lines with a common prefix (i.e.,
 ;; to fix reply text in emails).
