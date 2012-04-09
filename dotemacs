@@ -151,6 +151,12 @@
     (mouse-avoidance-mode)
     (ido-mode)
 
+    ;; Load auto-complete mode
+    (add-load-path "emacs/auto-complete")
+    (require 'auto-complete-config)
+    (add-to-list 'ac-dictionary-directories "/Users/cygnus/emacs/auto-complete/ac-dict")
+    (ac-config-default)
+
     (if window-system
         (progn
           (tool-bar-mode nil)
