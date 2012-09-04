@@ -91,6 +91,11 @@
     (load-library "ebby")
     (load-library "remote-compile-helper")
 
+    (autoload 'glsl-mode "glsl-mode" nil t)
+    (add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
+    (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
+    (add-to-list 'auto-mode-alist '("\\.glsl\\'" . glsl-mode))
+
     (require 'desktop)
 ;;    (require 'parenthesis)
     (require 'redo)
@@ -150,6 +155,12 @@
     (transient-mark-mode 1)
     (mouse-avoidance-mode)
     (ido-mode)
+
+    ;; Load auto-complete mode
+    (add-load-path "emacs/auto-complete")
+    (require 'auto-complete-config)
+    (add-to-list 'ac-dictionary-directories "/Users/cygnus/emacs/auto-complete/ac-dict")
+    (ac-config-default)
 
     (if window-system
         (progn
