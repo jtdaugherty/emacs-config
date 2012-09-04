@@ -12,7 +12,8 @@
       )
 )
 ;; (my-color-theme-light)
-(my-color-theme-dark)
+;; (my-color-theme-dark)
+(color-theme-dark-blue2)
 
 ;;(add-load-path "emacs_work")
 ;;(load-library "dotemacs")
