@@ -1,15 +1,16 @@
 ;; emacs, this is -*- emacs-lisp -*-
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(Info-additional-directory-list (quote ("/usr/share/info")))
  '(blink-cursor-mode t)
  '(case-fold-search t)
  '(column-number-mode t)
  '(current-language-environment "ASCII")
+ '(custom-safe-themes (quote ("31489268a6d6e330941d0e4f9b4e70ac8a232e33cb5920d39b35ca97789ac912" "5e1d1564b6a2435a2054aa345e81c89539a72c4cad8536cfe02583e0b7d5e2fa" "6cfe5b2f818c7b52723f3e121d1157cf9d95ed8923dbc1b47f392da80ef7495d" "21d9280256d9d3cf79cbcf62c3e7f3f243209e6251b215aede5026e0c5ad853f" "30fe7e72186c728bd7c3e1b8d67bc10b846119c45a0f35c972ed427c45bacc19" "71efabb175ea1cf5c9768f10dad62bb2606f41d110152f4ace675325d28df8bd" default)))
  '(display-time-mode t)
  '(global-font-lock-mode t nil (font-lock))
  '(mouse-avoidance-animation-delay 10.0)
@@ -81,6 +82,9 @@
   (define-key global-map "\C-ca" 'org-agenda)
   (setq org-log-done t)
   (setq org-hide-leading-stars t)
+
+  (require 'package)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 )
 
 (defun load-required-sources ()
@@ -148,8 +152,8 @@
     (setq desktop-save-mode t)
 
     ;; Other modes.
-    (menu-bar-mode nil)
-    (blink-cursor-mode nil)
+    (menu-bar-mode -1)
+    (blink-cursor-mode -1)
     (line-number-mode 1)
     (column-number-mode 1)
     (transient-mark-mode 1)
@@ -157,10 +161,10 @@
     (ido-mode)
 
     ;; Load auto-complete mode
-    (add-load-path "emacs/auto-complete")
-    (require 'auto-complete-config)
-    (add-to-list 'ac-dictionary-directories "/Users/cygnus/emacs/auto-complete/ac-dict")
-    (ac-config-default)
+    ;; (add-load-path "emacs/auto-complete")
+    ;; (require 'auto-complete-config)
+    ;; (add-to-list 'ac-dictionary-directories "/Users/cygnus/emacs/auto-complete/ac-dict")
+    ;; (ac-config-default)
 
     (if window-system
         (progn
@@ -168,8 +172,6 @@
           (scroll-bar-mode nil)
           )
       )
-
-    (load-library "theme")
     )
 )
 
@@ -209,3 +211,9 @@
 )
 
 (configure-emacs)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
