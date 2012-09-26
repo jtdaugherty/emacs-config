@@ -8,9 +8,7 @@
       )
 )
 
-(load-theme 'jtd-tsdh-dark)
-
-;; (color-theme-dark-blue2)
+;; (load-theme 'jtd-tsdh-dark)
 
 ;; (add-load-path "emacs_work")
 ;; (load-library "dotemacs")
