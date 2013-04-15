@@ -59,6 +59,7 @@
   (progn
     (put 'downcase-region 'disabled nil)
 
+    (setq require-final-newline t)
     (setq-default c-basic-offset 4)
     (display-time)
     (keyboard-translate ?\C-h ?\C-?)
